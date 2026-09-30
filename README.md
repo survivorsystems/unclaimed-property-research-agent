@@ -1,3 +1,39 @@
+# Unclaimed Property Research Agent
+
+An adaptation of [Scott Martin Anderson's Clearfront](https://github.com/scottmartinanderson/clearfront) for evidence-backed research into likely owners of unclaimed property, using legitimately public information and mandatory human review.
+
+**Status: architecture audit and adaptation planning only.** The inherited Clearfront implementation is preserved, but it is not yet an approved unclaimed-property worker. No live research workflow, source-policy enforcement, Supabase worker adapter, or identity-confidence rubric has been implemented in this fork.
+
+Start with [the adaptation audit](docs/clearfront-adaptation-audit.md) and [the repository instructions](AGENTS.md). The audit documents actual implementation findings, database mappings, license obligations, and the recommended build sequence.
+
+## Project boundaries
+
+- Reuse the upstream orchestration and utility patterns where appropriate, with providers behind adapters.
+- Keep the existing `research_agent` Supabase schema in Oddly Functional as the durable system of record. Do not recreate or destructively migrate it.
+- Keep the existing human-review dashboard separate from this research-worker repository.
+- Preserve supporting and contradictory evidence, source provenance, uncertainty, and distinct possible owners. A name match is not identity confirmation.
+- Keep property opportunity, identity confidence, human approval, and outreach approval separate.
+- Research only legitimately public sources. No breach/leak data, account-registration or password-reset probing, private accounts/messages, credential research, restricted investigator databases, or access-control circumvention.
+- Apify, Scrapling, and any particular search or extraction vendor are optional future adapters, not required core dependencies.
+
+## Operational warning
+
+Do not run, deploy, install as an agent skill, or register the inherited CLI, REPL, web console, MCP server, Docker image, or unrestricted graph workflow for this project yet. The upstream registries still expose tools outside our research rules. These documentation warnings are not runtime enforcement. The local web console also has no authentication system.
+
+The original Python package name, publisher metadata, dependencies, environment example, and upstream instructions remain unchanged to avoid premature code churn. They describe upstream Clearfront, not an approved installation or usage guide for this adaptation. Do not publish the inherited package/plugin/MCP identity as our product.
+
+## Provenance
+
+Forked from commit `4fa50326283c77fad0d84e93d0367b50944fb8e3` (Clearfront package version `2.7.3`). Preserve [LICENSE](LICENSE) and the [bundled dataset notice](clearfront/tools/data/NOTICE). Code is MIT-licensed; the bundled WhatsMyName dataset has separate CC BY-SA 4.0 terms.
+
+`origin` is our fork; `upstream` is the original repository and is for intentional review of upstream changes. Keep adaptation commits separate and do not push to upstream.
+
+---
+
+## Original upstream README (preserved reference)
+
+Everything below is the inherited README. Its claims, integrations, and commands must not be treated as approved project behavior; see the audit above.
+
 <!-- mcp-name: sh.clearfront/clearfront -->
 
 <div align="center">
