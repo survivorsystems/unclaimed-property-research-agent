@@ -2,9 +2,9 @@
 
 An adaptation of [Scott Martin Anderson's Clearfront](https://github.com/scottmartinanderson/clearfront) for evidence-backed research into likely owners of unclaimed property, using legitimately public information and mandatory human review.
 
-**Status: architecture audit and adaptation planning only.** The inherited Clearfront implementation is preserved, but it is not yet an approved unclaimed-property worker. No live research workflow, source-policy enforcement, Supabase worker adapter, or identity-confidence rubric has been implemented in this fork.
+**Status: audited foundation plus an offline-tested public-source safety boundary.** The inherited Clearfront collectors and entrypoints are now import-quarantined. The new dispatcher defaults to no approved sources. No live research workflow, production source adapter, Supabase worker adapter, or identity-confidence rubric has been implemented.
 
-Start with [the adaptation audit](docs/clearfront-adaptation-audit.md) and [the repository instructions](AGENTS.md). The audit documents actual implementation findings, database mappings, license obligations, and the recommended build sequence.
+Start with [the safety-boundary guide](docs/public-source-safety-boundary.md), [the project summary](docs/project-summary.md), [the adaptation audit](docs/clearfront-adaptation-audit.md), and [the repository instructions](AGENTS.md).
 
 ## Project boundaries
 
@@ -18,7 +18,15 @@ Start with [the adaptation audit](docs/clearfront-adaptation-audit.md) and [the 
 
 ## Operational warning
 
-Do not run, deploy, install as an agent skill, or register the inherited CLI, REPL, web console, MCP server, Docker image, or unrestricted graph workflow for this project yet. The upstream registries still expose tools outside our research rules. These documentation warnings are not runtime enforcement. The local web console also has no authentication system.
+Do not deploy, install as an agent skill, or register the inherited CLI, REPL, web console, MCP server, Docker image, or unrestricted graph workflow. Normal imports of these modules and all inherited collectors now raise `LegacyResearchDisabled` before their code/SDKs load. No environment key or flag removes the quarantine. This guard is not an operating-system sandbox for hostile Python code or already-running processes. The preserved web console also has no authentication system.
+
+The approved-source boundary uses only the Python standard library. Run its offline checks from this repository:
+
+```powershell
+python -m unittest discover -s tests -p test_public_source_boundary.py -v
+```
+
+The historical upstream suite is retained as reference but is not the active fork CI suite: it imports deliberately quarantined collectors. Do not bypass the guard to run those tests.
 
 The original Python package name, publisher metadata, dependencies, environment example, and upstream instructions remain unchanged to avoid premature code churn. They describe upstream Clearfront, not an approved installation or usage guide for this adaptation. Do not publish the inherited package/plugin/MCP identity as our product.
 

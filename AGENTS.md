@@ -2,7 +2,7 @@
 
 ## Current stage
 
-This is the Clearfront-based Unclaimed Property Research Agent fork. The initial adaptation is documentation-only. The original implementation, tests, package namespace, and license notices remain preserved. Read `docs/clearfront-adaptation-audit.md` before substantial work and distinguish implemented behavior from plans.
+This is the Clearfront-based Unclaimed Property Research Agent fork. An offline-tested default-deny public-source boundary is implemented under `clearfront/public_sources/`; no production source adapter or worker exists. Upstream collectors/provider code/tests remain preserved, but normal imports of collectors and legacy entrypoints are quarantined in package initialization. Read `docs/public-source-safety-boundary.md` and the baseline `docs/clearfront-adaptation-audit.md` before substantial work. Distinguish implemented behavior from plans.
 
 ## Reuse and provenance
 
@@ -12,7 +12,7 @@ Inspect existing implementation and approved upstream code before rebuilding. Pr
 
 - Use only legitimately public information from explicitly approved sources.
 - Do not research with passwords/credentials, private accounts/messages, breach/leak data, restricted investigator databases, access-control circumvention, or account-registration/password-reset probing.
-- Do not run/deploy/install/register inherited CLI, REPL, web, MCP, Docker, or graph workflows as this project's worker before runtime policy enforcement is implemented and verified. The inherited registries remain unrestricted; these instructions are not a runtime safety boundary.
+- Do not run/deploy/install/register inherited CLI, REPL, web, MCP, Docker, or graph workflows as this project's worker. Do not remove/bypass the import quarantine to re-enable their unrestricted registries. There is intentionally no environment-variable bypass. Retain it until approved provider/transport/entrypoint adapters are separately implemented and verified.
 - Do not install external OSINT binaries or enable providers merely to complete a documentation audit.
 - Keep source receipts, material-claim provenance, observation timestamps, and contradictory evidence. Multiple tools finding the same underlying source are not independent corroboration.
 - Preserve separate candidates for same-name people. Require multiple relevant identity attributes; treat inferred relationships and search snippets as leads, not established identity facts.
@@ -29,4 +29,4 @@ Keep trusted database/provider configuration outside model inputs and browser co
 
 Keep external sources, extraction vendors, model providers, and storage behind explicit interfaces. Apify or Scrapling must not be mandatory. Preserve testability, source-policy enforcement at dispatch (including nested calls), typed errors, budgets, idempotency, and durable job/run state. Do not use agent conversations, graphs, or local report files as the sole system of record.
 
-For documentation-only work, validate links, provenance, and changed-file scope without importing or executing network-capable upstream tools. Report exactly what was tested and what remains unverified. Before later API-backed execution, follow the applicable credential-setup skill without printing secrets.
+For boundary work, use the standard-library offline suite: `python -m unittest discover -s tests -p test_public_source_boundary.py -v`. Tests may prove legacy module imports/console launches are refused before their source or SDKs load. Do not run the historical upstream suite by disabling the guard. No model/provider key is needed for the boundary. Before later API-backed work, follow the applicable credential-setup skill without printing secrets.
