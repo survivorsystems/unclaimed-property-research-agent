@@ -2,6 +2,8 @@
 
 Audit started: 2026-09-29. Documentation finalized: 2026-09-30. Status: **implementation inspected; adaptation proposed, not implemented**.
 
+Historical baseline: this audit describes the initial documentation-only change and pinned upstream code. The later [public-source boundary](public-source-safety-boundary.md) now quarantines inherited entrypoints and adds an offline-tested dispatcher. Its implemented status and limits supersede the audit's statements that safety enforcement is entirely future work. The upstream findings remain relevant.
+
 ## 1. Recommendation and scope
 
 Use Clearfront as a preserved architectural starting point, not as an immediately deployable owner-research system. Reuse bounded orchestration, provider separation, cache and export utilities through adapters. Replace the unrestricted collection policy, identifier/owner resolution, confidence semantics, evidence contract, and local-only persistence. Keep Supabase as the durable system of record and the existing dashboard as the human-review surface.

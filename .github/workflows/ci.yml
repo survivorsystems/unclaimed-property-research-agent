@@ -12,7 +12,21 @@ on:
   workflow_dispatch:
 
 jobs:
+  public-source-boundary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Offline public-source boundary tests (stdlib only)
+        run: python -m unittest discover -s tests -p test_public_source_boundary.py -v
+
   test:
+    # Historical upstream suite imports intentionally quarantined collectors.
+    # Preserve it for comparison, but do not install/run unrestricted collectors
+    # or API-backed entrypoints as this fork's CI verification.
+    if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
